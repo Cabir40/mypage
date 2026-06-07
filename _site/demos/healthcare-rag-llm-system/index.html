@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Healthcare RAG LLM System — Cabir Çelik</title>
+  <meta name="description" content="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/mypage/css/style.css">
+  <script>
+    (function () {
+      var stored = localStorage.getItem("theme");
+      var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__brand" href="/mypage/"></a>
+    <nav class="site-nav" aria-label="Primary">
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/"
+        >Home</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/projects/"
+        >Projects</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/demos/"
+        aria-current="page">Demos</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/about/"
+        >About</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/contact/"
+        >Contact</a>
+      
+      
+    </nav>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9788;</button>
+  </header>
+
+  <main id="main">
+    <article class="page-demo-detail">
+  <header class="demo-header">
+    <div class="demo-header__meta mono">
+      <span>Vol. 01</span>
+      <span>Healthcare NLP / LLMs</span>
+    </div>
+    <h1 class="demo-header__title">Healthcare RAG LLM System</h1>
+    <p class="demo-header__subtitle">Optimizing document splits and retrieval parameters for clinical question-answering</p>
+
+    
+    <blockquote class="pullquote">
+      <p>Sentence-aware splitting outperforms traditional character-based splitting — and Split Length, Top-K, and Window Size each materially change retrieval quality in clinical document analysis.
+</p>
+      <cite class="mono">M.Sc. Thesis, Atılım University, 2024</cite>
+    </blockquote>
+    
+
+    
+    <ul class="demo-header__links">
+      
+      
+      <li><a class="btn btn--primary" href="https://github.com/Cabir40/hls-llm-doc-qa">Open-source code (hls-llm-doc-qa)</a></li>
+      
+      
+      
+      
+      
+      
+    </ul>
+    
+  </header>
+
+  <div class="prose demo-body">
+    <p>An end-to-end Retrieval-Augmented Generation pipeline for healthcare document
+question-answering, built around the central research question of my M.Sc.
+thesis: how do document-splitting strategy and retrieval parameters affect the
+quality of LLM responses over clinical text?</p>
+<h2>The problem</h2>
+<p>General-purpose RAG pipelines typically split documents by raw character
+count, which routinely cuts clinical sentences — and the medical concepts
+inside them — in half. For healthcare question-answering, where a single
+fragmented sentence can change a retrieved answer from correct to dangerously
+wrong, this is not a cosmetic issue.</p>
+<h2>The approach</h2>
+<p>The system integrates Spark NLP, LangChain, and Haystack on Databricks, and
+investigates <strong>sentence-aware document splitting</strong> as an alternative to
+character-based methods. On top of the splitting strategy itself, the pipeline
+systematically sweeps three retrieval parameters:</p>
+<ul>
+<li><strong>Split Length</strong> — how large each retrievable chunk is</li>
+<li><strong>Top-K</strong> — how many candidate chunks are retrieved per query</li>
+<li><strong>Window Size</strong> — how much surrounding context is attached to each chunk</li>
+</ul>
+<p>Each configuration is benchmarked with similarity scoring against a dataset of
+clinical questions and source documents, so the comparison is empirical rather
+than anecdotal.</p>
+<h2>The result</h2>
+<p>Sentence-aware splitting consistently and significantly outperformed
+character-based splitting, and tuning Split Length, Top-K, and Window Size
+produced measurable improvements in retrieval quality — directly improving the
+accuracy of the downstream LLM-generated answers in clinical document
+analysis. These findings now inform how I architect production RAG systems for
+healthcare document Q&amp;A at John Snow Labs.</p>
+<h2>Source code</h2>
+<p>The open-source companion implementation, <code>hls-llm-doc-qa</code>, is available on
+GitHub and demonstrates the question-answering pipeline over custom document
+collections using open-source LLMs and LangChain.</p>
+
+  </div>
+
+  <nav class="demo-nav" aria-label="Back">
+    <a href="/mypage/demos/">&larr; All demos</a>
+  </nav>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 </p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+  </script>
+</body>
+</html>

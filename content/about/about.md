@@ -12,6 +12,7 @@ badges:
   - Multilingual Speech Recognition
   - Entity Resolution
   - MLOps
+  - Agentic AI Systems
 profiles:
   - label: Email
     url: "mailto:cabirchelik@gmail.com"

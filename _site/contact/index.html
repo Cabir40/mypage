@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — Cabir Çelik</title>
+  <meta name="description" content="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/mypage/css/style.css">
+  <script>
+    (function () {
+      var stored = localStorage.getItem("theme");
+      var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__brand" href="/mypage/"></a>
+    <nav class="site-nav" aria-label="Primary">
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/"
+        >Home</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/projects/"
+        >Projects</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/demos/"
+        >Demos</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/about/"
+        >About</a>
+      
+      
+      
+      <a class="site-nav__link"
+        href="/mypage/contact/"
+        aria-current="page">Contact</a>
+      
+      
+    </nav>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9788;</button>
+  </header>
+
+  <main id="main">
+    <div class="page-contact">
+  <h1 class="page-header__title">Get in touch</h1>
+
+  
+  <p class="contact-body">Always glad to hear from fellow researchers, engineers, and teams working on healthcare AI, clinical NLP, or LLM systems — reach out by email or any of the profiles below.
+</p>
+  
+
+  <ul class="profile-links profile-links--large" aria-label="Profiles">
+    
+    <li><a href="mailto:cabirchelik@gmail.com">Email</a></li>
+    
+    <li><a href="https://www.linkedin.com/in/cabircelik/">LinkedIn</a></li>
+    
+    <li><a href="https://github.com/Cabir40">GitHub</a></li>
+    
+    <li><a href="https://medium.com/@cabircelik">Medium</a></li>
+    
+  </ul>
+
+  <dl class="contact-meta">
+    <div class="contact-meta__row">
+      <dt class="mono">Location</dt>
+      <dd>Amsterdam, Netherlands</dd>
+    </div>
+    
+    <div class="contact-meta__row">
+      <dt class="mono">Languages</dt>
+      <dd>
+        <ul class="language-list">
+          
+          <li>Turkish — Native</li>
+          
+          <li>English — Professional Proficiency</li>
+          
+          <li>Dutch — Basic Proficiency</li>
+          
+        </ul>
+      </dd>
+    </div>
+    
+  </dl>
+</div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 </p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+  </script>
+</body>
+</html>
