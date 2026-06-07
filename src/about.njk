@@ -1,0 +1,36 @@
+---
+layout: base.njk
+title: "About — Cabir Çelik"
+nav: about
+permalink: /about/
+---
+<div class="page-about">
+  <div class="about-hero">
+    <img class="about-hero__avatar" src="{{ '/assets/avatar.jpg' | url }}" alt="Portrait of {{ home.about.name }}" width="128" height="128">
+    <div>
+      <h1 class="about-hero__name">{{ home.about.name }}</h1>
+      <p class="about-hero__title">{{ home.about.title }}</p>
+      <p class="about-hero__location mono">{{ home.about.location }}</p>
+    </div>
+  </div>
+
+  {% if home.about.badges %}
+  <ul class="badge-list" aria-label="Specialisms">
+    {% for badge in home.about.badges %}
+    <li class="badge">{{ badge }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if home.about.content %}
+  <div class="prose about-bio">{{ home.about.content | safe }}</div>
+  {% endif %}
+
+  {% if home.about.profiles %}
+  <ul class="profile-links profile-links--large" aria-label="Profiles">
+    {% for profile in home.about.profiles %}
+    <li><a href="{{ profile.url }}">{{ profile.label }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>

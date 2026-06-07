@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or site.name }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
+  <script>
+    (function () {
+      var stored = localStorage.getItem("theme");
+      var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__brand" href="{{ '/' | url }}">{{ site.name }}</a>
+    <nav class="site-nav" aria-label="Primary">
+      {% for page in site.pages %}
+      {% if page.nav %}
+      <a class="site-nav__link"
+        href="{% if page.id == 'home' %}{{ '/' | url }}{% else %}{{ ('/' + page.id + '/') | url }}{% endif %}"
+        {% if nav == page.id %}aria-current="page"{% endif %}>{{ page.title }}</a>
+      {% endif %}
+      {% endfor %}
+    </nav>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9788;</button>
+  </header>
+
+  <main id="main">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {% currentYear %} {{ site.name }}</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+  </script>
+</body>
+</html>

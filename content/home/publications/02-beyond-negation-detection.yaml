@@ -1,0 +1,9 @@
+title: "Beyond Negation Detection: Comprehensive Assertion Detection Models for Clinical NLP"
+venue: "arXiv:2503.17425 — with Veysel Kocaman, Yigit Gul, M. Aytug Kaya, Hasham Ul Haq, Mehmet Butgul, David Talby"
+link: "https://arxiv.org/abs/2503.17425"
+tag: Paper
+tldr: >
+  Fine-tuned clinical assertion-detection models (Present, Absent, Hypothetical,
+  Conditional, and more) that beat GPT-4o head-to-head — 0.962 vs. 0.901
+  accuracy — and outperform commercial cloud APIs, while staying transparent
+  and customizable inside Spark NLP instead of relying on black-box systems.

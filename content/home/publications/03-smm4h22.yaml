@@ -1,0 +1,9 @@
+title: "John Snow Labs @ SMM4H'22: Social Media Mining for Health (#SMM4H) with Spark NLP"
+venue: "ACL Anthology · 2022.smm4h-1.13 — with Veysel Kocaman, Damla Gurbaz, Gursev Pirge, Bunyamin Polat, Halil Saglamlar, Meryem Vildan Sarikaya, Gokhan Turer, David Talby"
+link: "https://aclanthology.org/2022.smm4h-1.13/"
+tag: Paper
+tldr: >
+  Trained transformer-based NER and classification models on the SMM4H 2022
+  health-related social-media datasets using Spark NLP's BERT pipelines —
+  shipped as production-grade, GPU-accelerated models that scale across Spark
+  clusters in Python, R, Scala, and Java.

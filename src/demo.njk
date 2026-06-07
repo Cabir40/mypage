@@ -1,0 +1,46 @@
+---
+layout: base.njk
+pagination:
+  data: demos
+  size: 1
+  alias: demo
+permalink: "/demos/{{ demo.slug }}/"
+eleventyComputed:
+  title: "{{ demo.title }} — Cabir Çelik"
+  nav: demos
+---
+<article class="page-demo-detail">
+  <header class="demo-header">
+    <div class="demo-header__meta mono">
+      {% if demo.volume %}<span>{{ demo.volume }}</span>{% endif %}
+      {% if demo.issue %}<span>{{ demo.issue }}</span>{% endif %}
+    </div>
+    <h1 class="demo-header__title">{{ demo.title }}</h1>
+    {% if demo.subtitle %}<p class="demo-header__subtitle">{{ demo.subtitle }}</p>{% endif %}
+
+    {% if demo.pullquote %}
+    <blockquote class="pullquote">
+      <p>{{ demo.pullquote }}</p>
+      {% if demo.pullquoteCite %}<cite class="mono">{{ demo.pullquoteCite }}</cite>{% endif %}
+    </blockquote>
+    {% endif %}
+
+    {% if demo.links %}
+    <ul class="demo-header__links">
+      {% for link in demo.links %}
+      {% if link.url %}
+      <li><a class="btn btn--{{ link.style or 'secondary' }}" href="{{ link.url }}">{{ link.label }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  <div class="prose demo-body">
+    {{ demo.content | safe }}
+  </div>
+
+  <nav class="demo-nav" aria-label="Back">
+    <a href="{{ '/demos/' | url }}">&larr; All demos</a>
+  </nav>
+</article>

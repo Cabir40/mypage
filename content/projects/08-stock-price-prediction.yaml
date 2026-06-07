@@ -1,0 +1,7 @@
+title: Stock Price Prediction
+stack: Bi-LSTM · RNN · Streamlit · Flask
+demo: ""
+link: ""
+description: >
+  Time-series forecasting for stock prices using bidirectional LSTM networks
+  with an interactive Streamlit dashboard.
