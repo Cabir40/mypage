@@ -108,6 +108,7 @@ ul, ol { list-style: none; }
   display: flex;
   gap: var(--space-lg);
   flex: 1;
+  justify-content: center;
 }
 
 .site-nav__link {
@@ -124,8 +125,13 @@ ul, ol { list-style: none; }
   border-bottom-color: var(--color-accent);
 }
 
-.theme-toggle {
+.site-header__end {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle {
   background: none;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -153,6 +159,65 @@ ul, ol { list-style: none; }
   color: var(--color-muted);
   font-size: 0.8rem;
   font-family: var(--font-mono);
+}
+
+/* ============================================================
+   Home page two-column layout
+   ============================================================ */
+.page-home {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  grid-template-areas: "main sidebar";
+  gap: 0 var(--space-2xl);
+  align-items: start;
+  max-width: var(--size-page);
+}
+
+.home-main {
+  grid-area: main;
+  min-width: 0;
+}
+
+.home-sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: calc(64px + var(--space-xl));
+  padding-top: var(--space-sm);
+}
+
+.home-sidebar__heading {
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+  font-size: 0.7rem;
+}
+
+.home-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.home-sidebar__link {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: color var(--transition), background var(--transition);
+  border-left: 2px solid transparent;
+}
+.home-sidebar__link:hover {
+  color: var(--color-text);
+  background: var(--color-surface);
+  text-decoration: none;
+}
+.home-sidebar__link.is-active {
+  color: var(--color-accent);
+  border-left-color: var(--color-accent);
+  background: var(--color-surface);
 }
 
 /* ============================================================
@@ -673,6 +738,14 @@ ul, ol { list-style: none; }
 /* ============================================================
    Responsive
    ============================================================ */
+@media (max-width: 900px) {
+  .page-home {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+  .home-sidebar { display: none; }
+}
+
 @media (max-width: 600px) {
   .site-header { padding: var(--space-md); gap: var(--space-md); }
   .site-nav { gap: var(--space-md); }

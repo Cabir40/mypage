@@ -53,13 +53,25 @@
       
       
     </nav>
-    <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9788;</button>
+    <div class="site-header__end">
+      <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9788;</button>
+    </div>
   </header>
 
   <main id="main">
     <div class="page-home">
+  <aside class="home-sidebar" aria-label="On this page">
+    <p class="home-sidebar__heading mono">On this page</p>
+    <nav>
+      <a class="home-sidebar__link" href="#about">About</a>
+      <a class="home-sidebar__link" href="#experience">Experience</a>
+      <a class="home-sidebar__link" href="#education">Education</a>
+      <a class="home-sidebar__link" href="#publications">Publications</a>
+    </nav>
+  </aside>
+  <div class="home-main">
 
-  <section class="hero" aria-label="Introduction">
+  <section class="hero" id="about" aria-label="Introduction">
     <div class="hero__grid">
       <img class="hero__avatar" src="/mypage/assets/avatar.jpg" alt="Portrait of Cabir Celik" width="96" height="96">
       <div class="hero__text">
@@ -79,6 +91,8 @@
           <li class="badge">Entity Resolution</li>
           
           <li class="badge">MLOps</li>
+          
+          <li class="badge">Agentic AI Systems</li>
           
         </ul>
         <ul class="profile-links" aria-label="Profiles">
@@ -287,6 +301,7 @@ research prototype to production at scale.</p>
     </ol>
   </section>
 
+  </div>
 </div>
 
   </main>
@@ -302,6 +317,23 @@ research prototype to production at scale.</p>
       document.documentElement.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
     }
+    // Highlight active sidebar section on scroll
+    (function () {
+      var links = document.querySelectorAll(".home-sidebar__link");
+      if (!links.length) return;
+      var ids = Array.from(links).map(function (l) { return l.getAttribute("href").slice(1); });
+      var sections = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove("is-active"); });
+            var active = document.querySelector('.home-sidebar__link[href="#' + entry.target.id + '"]');
+            if (active) active.classList.add("is-active");
+          }
+        });
+      }, { rootMargin: "-20% 0px -70% 0px" });
+      sections.forEach(function (s) { observer.observe(s); });
+    })();
   </script>
 </body>
 </html>

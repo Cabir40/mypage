@@ -5,8 +5,18 @@ nav: home
 permalink: /
 ---
 <div class="page-home">
+  <aside class="home-sidebar" aria-label="On this page">
+    <p class="home-sidebar__heading mono">On this page</p>
+    <nav>
+      <a class="home-sidebar__link" href="#about">About</a>
+      <a class="home-sidebar__link" href="#experience">Experience</a>
+      <a class="home-sidebar__link" href="#education">Education</a>
+      <a class="home-sidebar__link" href="#publications">Publications</a>
+    </nav>
+  </aside>
+  <div class="home-main">
 
-  <section class="hero" aria-label="Introduction">
+  <section class="hero" id="about" aria-label="Introduction">
     <div class="hero__grid">
       <img class="hero__avatar" src="{{ '/assets/avatar.jpg' | url }}" alt="Portrait of {{ home.about.name }}" width="96" height="96">
       <div class="hero__text">
@@ -91,4 +101,5 @@ permalink: /
     </ol>
   </section>
 
-</div>
+  </div>{# end .home-main #}
+</div>{# end .page-home #}
