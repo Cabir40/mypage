@@ -1,7 +1,0 @@
----
-role: Data Scientist Intern
-org: GittiGidiyor (eBay Turkey)
-location: Istanbul, Turkey
-dates: Jul 2020 – Nov 2020
----
-- Built a product Recommender System using NLP techniques (Word2Vec, GloVe, cosine similarity) to improve product discovery and user engagement on one of Turkey's largest e-commerce platforms
