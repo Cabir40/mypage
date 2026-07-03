@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# Cabir Çelik — Portfolio
 
-## Project info
+Personal portfolio site built with React + Vite + TypeScript, deployed to GitHub Pages.
 
-**URL**: https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2
+**Live:** https://cabir40.github.io/mypage/
 
-## How can I edit this code?
+## Stack
 
-There are several ways of editing your application.
+- **React 18** + React Router 6
+- **Vite 5** (base path `/mypage/`)
+- **TypeScript 5**
+- **Tailwind CSS 3** + shadcn-ui
+- **Supabase** — auth & Edge Functions
+- **Stripe** — membership / payments
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start dev server (http://localhost:8080/mypage/)
 npm run dev
+
+# Production build → dist/
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## Project structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+  App.tsx          ← router + providers
+  components/      ← shared UI components + shadcn-ui primitives (ui/)
+  data/            ← all site content as TypeScript files
+    types.ts       ← shared interfaces
+    loader.ts      ← multi-format collection loader (ts / json / yaml)
+    about/         ← about.ts, experience.ts, education.ts
+    projects/      ← 001.ts … 019.ts
+    blogs/         ← P001.ts … P004.ts, clinical-nlp-101.ts
+    articles/      ← aggregator (projects + blogs)
+    contact/       ← contact.ts
+    source/        ← items.ts
+  hooks/           ← useAuth, useSubscription, use-toast
+  integrations/    ← Supabase + Lovable clients
+  pages/           ← one file per route
+scripts/
+  generate-sitemap.ts   ← auto-generates public/sitemap.xml
+supabase/
+  functions/       ← Stripe checkout, portal, webhook Edge Functions
+  migrations/      ← Postgres SQL migrations
+```
 
-**Use GitHub Codespaces**
+## Adding content
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Drop a new file in the right folder — `import.meta.glob` picks it up automatically, no router changes needed.
 
-## What technologies are used for this project?
+| Content | Folder | Naming |
+|---------|--------|--------|
+| Projects | `src/data/projects/` | `020.ts`, `021.ts`, … |
+| Blog posts | `src/data/blogs/` | `P005.ts`, `P006.ts`, … |
 
-This project is built with:
+Each file must `export default` an object matching the `Project` interface from `src/data/types.ts`.  
+See [`src/data/README.md`](src/data/README.md) for the full schema and `.json` / `.yaml` alternatives.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deployment
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Push to `main` — GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) builds and deploys to GitHub Pages automatically.

@@ -1,154 +1,170 @@
-# mypage — Cabir Celik portfolio site
+# mypage — Cabir Çelik Portfolio Site
 
-Eleventy v3 static site deployed to GitHub Pages via GitHub Actions on every push to `main`.
-Design direction and design tokens: [DESIGN.md](../resume/DESIGN.md) (shared with `resume/`).
-Master content source of truth: `../resume.md`.
+React 18 + Vite 5 + TypeScript SPA deployed to GitHub Pages at **https://cabir40.github.io/mypage/**.
+All content is authored as TypeScript files under `src/data/`.
 
 ## Build & dev
 
 ```bash
-npm run serve   # local dev server (hot-reload)
-npm run build   # production build → _site/
-npm run debug   # DEBUG=Eleventy* for troubleshooting
+npm run dev       # Vite dev server on http://localhost:8080/mypage/ (hot-reload)
+npm run build     # production build → dist/
+npm run preview   # preview the production build locally
+npm run lint      # ESLint
 ```
 
-CI: `.github/workflows/deploy.yml` — pushes `_site/` to GitHub Pages automatically.
+> **Note:** `predev` and `prebuild` run `tsx scripts/generate-sitemap.ts` to regenerate `public/sitemap.xml` automatically.
 
-## Architectural Vision (v2 — see [README.md](../README.md))
+CI: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) — builds and deploys `dist/` to GitHub Pages on every push to `main`.
 
-This is a **portfolio knowledge base**, not a blog. The long-term goal is:
+## Stack
 
-> Drop a folder into `content/projects/`, add assets beside it, push — the site auto-discovers and publishes everything. No nav updates. No config edits.
+| Layer | Technology |
+|-------|------------|
+| Framework | React 18 + React Router 6 |
+| Build tool | Vite 5 (`base: "/mypage/"`) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 3 + shadcn-ui |
+| Data fetching | TanStack React Query v5 |
+| Auth / backend | Supabase (Edge Functions + Postgres) |
+| Payments | Stripe (Embedded Checkout via Supabase Edge Functions) |
+| Deployment | GitHub Actions → GitHub Pages |
 
-The target workflow:
-```bash
-mkdir content/projects/new-agent
-# add index.md, images/, paper.pdf, demo.mp4
-git add . && git commit -m "new project" && git push
-# → site updates automatically
-```
-
-**Planned repository structure:**
-```
-content/
-├── home/
-├── projects/
-│   ├── healthcare-rag/
-│   │   ├── index.md        ← title, tags, github, demo + markdown body
-│   │   ├── images/
-│   │   ├── pdfs/
-│   │   ├── code/
-│   │   ├── videos/
-│   │   └── assets/
-│   └── medical-chatbot/
-│       ├── index.md
-│       └── ...
-├── demos/
-│   └── rag-optimization/
-│       ├── index.md
-│       ├── paper.pdf
-│       └── images/
-├── about/
-└── contact/
-
-assets/                     ← shared/global static assets only
-├── images/
-├── pdfs/
-├── icons/
-└── code/
-```
-
-**Asset co-location rule:** Assets belong *beside* their content file (`healthcare-rag/architecture.png`), not in a shared `assets/` folder. A flat `assets/500-files/` becomes unmaintainable.
-
-**Auto-generated pages** (no manual registration):
-- `/projects` — scanned from `content/projects/*`
-- `/publications` — scanned from `content/publications/*`, filterable by year/topic/venue
-- Homepage — auto-renders Featured Projects, Latest Publications, Experience Timeline
-
-**Only manual pages:** `content/about/about.md`, `content/contact/contact.yaml`
-
-**Tech stack under consideration for v2:** Astro + Content Collections + MDX + Pagefind (search) + Tailwind + GitHub Actions
-
-## Current State (v1 — YAML-driven)
-
-This is a **YAML-driven** site. Almost all content is `.yaml`; only demos and the About section use `.md` with front matter. The site reads `content/index.yaml` for page order.
+## Repository structure
 
 ```
-content/
-├── index.yaml                                    ← site config (name, baseUrl) + page/nav ordering
-├── about/about.md                                ← front-matter: name, title, location, badges[], profiles[]
-├── contact/contact.yaml                          ← heading, email, location, languages[], profiles[], body
-├── home/
-│   ├── experience/
-│   │   ├── 01-john-snow-labs.yaml
-│   │   ├── 02-eu-project.yaml
-│   │   ├── 03-jotform.yaml
-│   │   ├── 04-gittigidiyor.yaml
-│   │   └── 05-bootcamp-eu.yaml                   ← role, org, location, dates, bullets[]
-│   ├── education/
-│   │   ├── 01-msc-software-engineering.yaml
-│   │   ├── 02-bsc-computer-engineering.yaml
-│   │   └── 03-msc-bsc-mathematics-teaching.yaml  ← degree, institution, location, dates, thesis?
-│   ├── publications/
-│   │   ├── 01-rag-thesis.yaml
-│   │   ├── 02-beyond-negation-detection.yaml
-│   │   ├── 03-smm4h22.yaml
-│   │   └── 04-healthcare-llm-blog-post.yaml      ← title, venue, link, tag, tldr, citation?
-│   └── projects/
-│       └── 01-project_summary.md                 ← project summary/teaser (placeholder)
-├── projects/
-│   ├── 01-healthcare-rag-llm-system.yaml
-│   ├── 02-medical-multimodal-chatbot.yaml
-│   ├── 03-handwritten-medication-extraction.yaml
-│   ├── 04-healthcare-nlp-suite.yaml
-│   ├── 05-llm-document-qa-system.yaml
-│   ├── 06-brain-tumor-multi-classification.yaml
-│   ├── 07-mask-detection-yolov5.yaml
-│   ├── 08-stock-price-prediction.yaml
-│   └── 09-arduino-arm-car-robot.yaml             ← title, stack, demo (slug or ""), link, description
-└── demos/
-    ├── healthcare-rag-llm-system.md              ← title, subtitle, volume, issue, pullquote,
-    ├── agents/                                      pullquoteCite, media[], links[] + markdown body
-    └── healthcare/                               ← placeholder subdirs (empty)
+.github/workflows/
+  deploy.yml              ← build + deploy to GitHub Pages on push to main
+scripts/
+  generate-sitemap.ts     ← generates public/sitemap.xml (tsx, run by predev/prebuild)
+public/
+  favicon.ico
+  robots.txt              ← includes Sitemap: directive
+  sitemap.xml             ← auto-generated by generate-sitemap.ts
+  llms.txt
+  lovable-customization.js
+src/
+  main.tsx                ← entry point (React DOM render)
+  App.tsx                 ← BrowserRouter + all routes + providers
+  index.css               ← Tailwind directives + global styles
+  assets/
+    avatar.jpg.asset.json         ← image URL stubs (lovable asset system)
+    hero-home.jpg.asset.json
+  components/
+    Header.tsx
+    HeroSection.tsx
+    IntroSection.tsx
+    ProjectCard.tsx
+    Carousel.tsx
+    SEO.tsx
+    ScrollToTop.tsx
+    ProtectedRoute.tsx
+    StripeEmbeddedCheckout.tsx
+    PastDueBanner.tsx
+    PaymentTestModeBanner.tsx
+    ui/                   ← shadcn-ui primitives (button, input, tabs, toast, …)
+  data/                   ← ALL site content as TypeScript (also accepts .json / .yaml)
+    types.ts              ← shared interfaces: Project, Experience, Education, SourceItem, …
+    loader.ts             ← loadCollection<T>() — aggregates .ts / .json / .yaml via import.meta.glob
+    about/
+      about.ts            ← AboutData (name, title, location, email, avatar, badges, expertise)
+      experience.ts       ← Experience[] (role, org, location, dates, bullets[])
+      education.ts        ← Education[] (degree, institution, dates, thesis?, body?)
+    articles/
+      articles.ts         ← aggregator: re-exports projects + blogs, getProjectById(), getRelatedProjects()
+    projects/             ← 001.ts … 019.ts  (section: "projects")
+    blogs/                ← P001.ts … P004.ts, clinical-nlp-101.ts  (section: "blogs")
+    contact/
+      contact.ts          ← ContactData
+    source/
+      items.ts            ← SourceItem[] for the /source page
+  hooks/
+    useAuth.tsx           ← Supabase auth context
+    useSubscription.tsx   ← Stripe subscription status
+    useMembersArticleBody.tsx
+    use-toast.ts
+  integrations/
+    lovable/              ← Lovable cloud auth
+    supabase/             ← Supabase client init
+  lib/
+    stripe.ts             ← Stripe.js loader
+    utils.ts              ← cn() class merge helper
+  pages/
+    Index.tsx             ← /
+    Projects.tsx          ← /projects
+    ProjectDetail.tsx     ← /projects/:id  /blogs/:id  /article/:id
+    Blogs.tsx             ← /blogs
+    About.tsx             ← /about
+    Contact.tsx           ← /contact
+    Source.tsx            ← /source
+    Creativity.tsx        ← /creativity
+    Growth.tsx            ← /growth
+    Colleagues.tsx        ← /colleagues
+    StyleGuide.tsx        ← /style-guide
+    Auth.tsx              ← /auth
+    ResetPassword.tsx     ← /reset-password
+    Membership.tsx        ← /membership
+    MembershipReturn.tsx  ← /membership/return
+    Privacy.tsx           ← /privacy
+    Terms.tsx             ← /terms
+    NotFound.tsx          ← * (catch-all)
+supabase/
+  config.toml
+  functions/
+    create-checkout/      ← Stripe Embedded Checkout session
+    create-portal-session/ ← Stripe billing portal
+    payments-webhook/     ← Stripe webhook handler
+  migrations/             ← Postgres migration SQL files
 ```
 
-## Content conventions (v1)
+## Content conventions
 
-- **Add a file → entry appears. Remove a file → entry disappears.** No other files need changing for home sections.
-- Filenames use `NN-slug` prefix (`01-john-snow-labs.yaml`) to control display order; prefix is stripped for the slug.
-- `projects/*.yaml` `demo` field links a project card to its `/demos/<slug>/` page. Only set if a matching `demos/<slug>.md` exists.
-- `content/index.yaml` controls nav order and which sections appear on the home page — edit this to add/remove top-level pages or home sections.
+### Adding a project or blog post
 
-### Content schema by type
+Create a new file in the right folder — `import.meta.glob` picks it up automatically at build time.
 
-| Type | Location | Format | Key Fields |
-|------|----------|--------|------------|
-| Experience | `content/home/experience/NN-slug.yaml` | YAML | `role`, `org`, `location`, `dates`, `bullets[]` |
-| Education | `content/home/education/NN-slug.yaml` | YAML | `degree`, `institution`, `location`, `dates`, `thesis?`, `body` |
-| Publications | `content/home/publications/NN-slug.yaml` | YAML | `title`, `venue`, `link`, `tag` (`Thesis`/`Paper`/`Blog post`), `tldr`, `citation?` |
-| Projects | `content/projects/NN-slug.yaml` | YAML | `title`, `stack`, `demo` (slug or `""`), `link`, `description` |
-| Demos | `content/demos/slug.md` | Markdown + front matter | `title`, `subtitle`, `volume`, `issue`, `pullquote`, `pullquoteCite`, `media[]`, `links[]` |
-| About | `content/about/about.md` | Markdown + front matter | `name`, `title`, `location`, `email`, `phone`, `avatar`, `badges[]`, `profiles[]` |
-| Contact | `content/contact/contact.yaml` | YAML | `heading`, `email`, `location`, `languages[]`, `profiles[]`, `body` |
+```ts
+// src/data/projects/020.ts
+import type { Project } from "../types";
 
-### Canonical examples
-- Experience: [`content/home/experience/01-john-snow-labs.yaml`](../content/home/experience/01-john-snow-labs.yaml)
-- Publication: [`content/home/publications/01-rag-thesis.yaml`](../content/home/publications/01-rag-thesis.yaml)
-- Project card: [`content/projects/01-healthcare-rag-llm-system.yaml`](../content/projects/01-healthcare-rag-llm-system.yaml)
-- Demo article: [`content/demos/healthcare-rag-llm-system.md`](../content/demos/healthcare-rag-llm-system.md)
+const article: Project = {
+  id: "020",
+  section: "projects",
+  title: "My New Project",
+  subtitle: "One-line description",
+  category: "Healthcare AI",
+  date: "Jul 2026",
+  readTime: "5 min",
+  image: "https://…",
+  author: { name: "Cabir Çelik", avatar: "…", bio: "…" },
+  link: "https://github.com/Cabir40/…",
+  tags: ["Python", "LLM"],
+  content: {
+    introduction: "…",
+    sections: [{ heading: "…", content: "…" }],
+    conclusion: "…",
+  },
+};
 
-## Templates
+export default article;
+```
 
-`src/` is the Eleventy `input` directory (`.eleventy.js`: `input: "src"`):
-- Layouts → `src/_layouts/`
-- Partials/includes → `src/_includes/`
-- Global data loaders → `src/_data/` (JS files read YAML via `js-yaml`/`gray-matter` → Eleventy global data, via `src/_lib/contentLoader.js`)
-- CSS → `src/css/`
-- Entry templates → `src/*.njk`
+For blog posts use `src/data/blogs/P005.ts` with `section: "blogs"`.  
+Files also accept `.json` and `.yaml` — see [`src/data/README.md`](src/data/README.md).
+
+### Content schema reference
+
+| Type | File(s) | Key fields |
+|------|---------|------------|
+| Project / Blog | `src/data/projects/NNN.ts`, `src/data/blogs/PXXX.ts` | `id`, `section`, `title`, `subtitle`, `category`, `date`, `readTime`, `image`, `author`, `content`, `tags`, `membersOnly?`, `link?` |
+| About | `src/data/about/about.ts` | `name`, `title`, `location`, `email`, `phone`, `avatar`, `badges[]`, `expertise[]` |
+| Experience | `src/data/about/experience.ts` | `role`, `org`, `location`, `dates`, `bullets[]` |
+| Education | `src/data/about/education.ts` | `degree`, `institution`, `location`, `dates`, `thesis?`, `body?` |
+| Contact | `src/data/contact/contact.ts` | Contact details |
+| Source items | `src/data/source/items.ts` | `id`, `label`, `description`, `icon`, `comingSoon?` |
 
 ## Key config
 
-- `pathPrefix: "/mypage/"` — all URLs are rooted at `/mypage/` (GitHub Pages sub-path)
-- Eleventy version: `^3.0.0`
-- Front-matter parsing: `gray-matter`; Markdown rendering: `markdown-it`; YAML parsing: `js-yaml`
-- `{% currentYear %}` shortcode available in all Nunjucks templates
+- [`vite.config.ts`](vite.config.ts): `base: "/mypage/"` — all asset URLs are rooted at `/mypage/` for GitHub Pages
+- [`src/App.tsx`](src/App.tsx): `<BrowserRouter basename={import.meta.env.BASE_URL}>` — router respects the base path
+- [`scripts/generate-sitemap.ts`](scripts/generate-sitemap.ts): `BASE_URL = "https://cabir40.github.io/mypage"` — set this once for absolute sitemap URLs
+- Supabase project config: [`supabase/config.toml`](supabase/config.toml)
