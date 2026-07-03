@@ -1,0 +1,20 @@
+# Cabir Çelik
+
+> Portfolio of Cabir Çelik — Lead Data Scientist focused on healthcare AI, clinical NLP, and LLM-powered medical assistants. Projects, research publications, and writing.
+
+## Pages
+
+- [Home](/): Overview of work in healthcare AI and clinical NLP.
+- [Projects](/projects): Selected projects across clinical NLP, medical multimodal chatbots, and computer vision for healthcare.
+- [Blogs](/blogs): Research papers and articles on RAG, assertion detection, clinical de-identification, and healthcare LLM systems.
+- [About](/about): Bio, professional experience, education, and areas of expertise.
+- [Contact](/contact): Email, location, languages, and professional profiles.
+
+## Featured
+
+- [Clinical NLP 101](/blogs/clinical-nlp-101): A practical introduction to clinical natural language processing — entities, assertions, de-identification, and where to start.
+
+## Optional
+
+- [Source](/source): Reading list and resources.
+- [Colleagues](/colleagues): Cross-functional team of engineers and designers.

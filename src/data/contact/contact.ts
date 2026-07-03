@@ -1,0 +1,28 @@
+import type { Profile } from "../types";
+
+export interface ContactData {
+  heading: string;
+  email: string;
+  location: string;
+  languages: string[];
+  profiles: Profile[];
+  body: string;
+}
+
+export const contact: ContactData = {
+  heading: "Get in touch",
+  email: "cabirchelik@gmail.com",
+  location: "Amsterdam, Netherlands",
+  languages: [
+    "Turkish — Native",
+    "English — Professional Proficiency",
+    "Dutch — Basic Proficiency",
+  ],
+  profiles: [
+    { label: "Email", url: "mailto:cabirchelik@gmail.com" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/cabircelik/" },
+    { label: "GitHub", url: "https://github.com/Cabir40" },
+    { label: "Medium", url: "https://medium.com/@cabircelik" },
+  ],
+  body: "Always glad to hear from fellow researchers, engineers, and teams working on healthcare AI, clinical NLP, or LLM systems — reach out by email or any of the profiles below.",
+};
