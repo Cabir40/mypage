@@ -1,6 +1,6 @@
 import { Mail, Linkedin, Github, BookOpen } from "lucide-react";
 import { contact } from "@/data/contact/contact";
-import heroHomeAsset from "@/assets/hero-home.jpg.asset.json";
+import heroHomeUrl from "@/assets/hero-home.jpg";
 
 const iconMap: Record<string, typeof Mail> = {
   Email: Mail,
@@ -16,7 +16,7 @@ const HeroSection = () => {
         {/* Left side - Image */}
         <div className="relative aspect-[4/3] md:aspect-auto rounded-[2rem] overflow-hidden animate-scale-in">
           <img
-            src={heroHomeAsset.url}
+            src={heroHomeUrl}
             alt="Abstract composition of code, mathematical shapes, and neural networks in a warm minimal studio"
             className="w-full h-full object-cover transition-transform duration-[1200ms] hover:scale-105"
             width={1536}

@@ -1,5 +1,5 @@
 import type { AboutData } from "../types";
-import avatarAsset from "@/assets/avatar.jpg.asset.json";
+import avatarUrl from "@/assets/avatar.jpg";
 
 export const about: AboutData = {
   name: "Cabir Çelik",
@@ -7,7 +7,7 @@ export const about: AboutData = {
   location: "Amsterdam, Netherlands",
   email: "cabirchelik@gmail.com",
   phone: "+31 6 8795 4567",
-  avatar: avatarAsset.url,
+  avatar: avatarUrl,
   badges: [],
   expertise: [
     {
